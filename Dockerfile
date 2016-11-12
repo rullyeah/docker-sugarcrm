@@ -20,6 +20,9 @@ RUN curl -L -O "${SOURCEFORGE_MIRROR}/project/sugarcrm/1%20-%20SugarCRM%20${MAJO
 	chown -R www-data:www-data ${WWW_FOLDER}/* && \
 	chown -R www-data:www-data ${WWW_FOLDER}
 
+
+COPY docker-php-ext-timezone.ini /usr/local/etc/php/conf.d/docker-php-ext-timezone.ini
+
 # RUN sed -i 's/^upload_max_filesize = 2M$/upload_max_filesize = 10M/' /usr/local/etc/php/php.ini
 
 ADD config_override.php.pyt /usr/local/src/config_override.php.pyt
