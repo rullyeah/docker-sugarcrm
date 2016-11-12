@@ -26,6 +26,9 @@ ADD config_override.php.pyt /usr/local/src/config_override.php.pyt
 ADD envtemplate.py /usr/local/bin/envtemplate.py
 ADD init.sh /usr/local/bin/init.sh
 
+RUN sed -i 's/\r//' /usr/local/bin/init.sh
+RUN sed -i 's/\r//' /usr/local/bin/envtemplate.py
+
 RUN chmod u+x /usr/local/bin/init.sh
 
 ADD crons.conf /root/crons.conf
