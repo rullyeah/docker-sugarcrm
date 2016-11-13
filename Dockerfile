@@ -5,6 +5,8 @@ ENV MINOR_VERSION 24
 ENV SOURCEFORGE_MIRROR http://downloads.sourceforge.net
 ENV WWW_FOLDER /var/www/html
 
+VOLUME {WWW_FOLDER}
+
 RUN apt-get update && apt-get upgrade -y && \
     apt-get install -y libcurl4-gnutls-dev libpng-dev unzip cron re2c php5-imap python curl php5-curl php5-gd php5-mysql
 
@@ -15,10 +17,8 @@ WORKDIR /tmp
 
 RUN curl -L -O "${SOURCEFORGE_MIRROR}/project/sugarcrm/1%20-%20SugarCRM%20${MAJOR_VERSION}.X/SugarCommunityEdition-${MAJOR_VERSION}.X/SugarCE-${MAJOR_VERSION}.${MINOR_VERSION}.zip" && \
 	unzip SugarCE-${MAJOR_VERSION}.${MINOR_VERSION}.zip && \
-	rm -rf ${WWW_FOLDER}/* && \
-	cp -R /tmp/SugarCE-Full-${MAJOR_VERSION}.${MINOR_VERSION}/* ${WWW_FOLDER}/ && \
-	chown -R www-data:www-data ${WWW_FOLDER}/* && \
-	chown -R www-data:www-data ${WWW_FOLDER}
+	rm -rf ${WWW_FOLDER}/* 
+	
 
 
 COPY docker-php-ext-timezone.ini /usr/local/etc/php/conf.d/docker-php-ext-timezone.ini

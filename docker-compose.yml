@@ -1,16 +1,27 @@
-sugarcrm:
-  build: .
-  ports:
-    - "2080:80"
-  links:
-    - "db"
-  environment:
-    DB_TYPE: mysql
-    DB_MANAGER: MysqlManager
-db:
-  image: mysql
-  environment:
-    MYSQL_ROOT_PASSWORD: YZiT4p7BXUqpdgpc
-    MYSQL_DATABASE: sugarcrm
-    MYSQL_USER: sugarcrm
-    MYSQL_PASSWORD: wTxbULZMrosNR86J
+version: '2'
+services:
+  sugarcrm:
+    build: .
+    volumes:
+      - "./www:/var/www/html"
+    ports:
+      - "2080:80"
+    depends_on:
+      - "db"
+    links:
+      - "db"
+    environment:
+      DB_PORT_3306_TCP_ADDR: db
+      DB_PORT_3306_TCP_PORT: ${MYSQL_PORT}
+      DB_ENV_MYSQL_USER: ${MYSQL_USER}
+      DB_ENV_MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      DB_ENV_MYSQL_DATABASE: ${MYSQL_DATABASE}
+      DB_TYPE: mysql
+      DB_MANAGER: MysqlManager
+  db:
+    image: mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD
+      - MYSQL_DATABASE
+      - MYSQL_USER
+      - MYSQL_PASSWORD
