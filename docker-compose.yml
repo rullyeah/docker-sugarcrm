@@ -2,8 +2,12 @@ version: '2'
 services:
   sugarcrm:
     build: .
+    volumes:
+      - "./www:/var/www/html"
     ports:
       - "2080:80"
+    depends_on:
+      - "db"
     links:
       - "db"
     environment:
