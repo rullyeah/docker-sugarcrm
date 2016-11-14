@@ -10,6 +10,7 @@ services:
       - "db"
     links:
       - "db"
+    restart: always
     environment:
       DB_PORT_3306_TCP_ADDR: db
       DB_PORT_3306_TCP_PORT: ${MYSQL_PORT}
@@ -25,3 +26,4 @@ services:
       - MYSQL_DATABASE
       - MYSQL_USER
       - MYSQL_PASSWORD
+    restart: always

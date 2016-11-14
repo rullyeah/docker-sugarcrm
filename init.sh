@@ -22,10 +22,12 @@ if [ -z "$DATABASE_NAME" ]; then
 	export DATABASE_NAME=$DB_ENV_MYSQL_DATABASE
 fi
 
-cp -R /tmp/SugarCE-Full-${MAJOR_VERSION}.${MINOR_VERSION}/* ${WWW_FOLDER}/ && \
-    chown -R www-data:www-data ${WWW_FOLDER}/* && \
-    chown -R www-data:www-data ${WWW_FOLDER} && \
-    /usr/local/bin/envtemplate.py -i /usr/local/src/config_override.php.pyt -o /var/www/html/config_override.php
+if [ ! "$(ls -A ${WWW_FOLDER})" ]; then
+    cp -R /tmp/SugarCE-Full-${MAJOR_VERSION}.${MINOR_VERSION}/* ${WWW_FOLDER}/ && \
+        chown -R www-data:www-data ${WWW_FOLDER}/* && \
+        chown -R www-data:www-data ${WWW_FOLDER} && \
+        /usr/local/bin/envtemplate.py -i /usr/local/src/config_override.php.pyt -o /var/www/html/config_override.php
+fi
     
 /usr/sbin/cron
 apachectl -DFOREGROUND
